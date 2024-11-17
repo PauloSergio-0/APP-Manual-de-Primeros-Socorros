@@ -1,4 +1,5 @@
 import { db } from './SQLite';
+import {guias_datas} from '../mocks/guia'
 
 export function createTable() {
   const sql = `CREATE TABLE IF NOT EXISTS guias (
@@ -7,6 +8,7 @@ export function createTable() {
     description VARCHAR NOT NULL,
     create_date TIMESTAMP);
     `;
+    
 
   db.transaction((transaction) => {
     transaction.executeSql(sql);
@@ -15,7 +17,47 @@ export function createTable() {
     console.log(error);
   }, () => {
     console.log("transaction complete call back ");
+      });
+
+      insert_data___db()
+}
+export function insert_data___db() {
+  const query_count = "SELECT COUNT(*) as count FROM guias";
+
+  db.transaction((transaction) => {
+    // Contagem de registros
+    transaction.executeSql(query_count, [], (txn, result) => {
+      const qtd_items = result.rows.item(0).count; // Acessando a contagem do primeiro item do resultado
+
+      if (qtd_items === 0) { // Se não houver itens, adicione os dados
+        for (const i of guias_datas) {
+          console.log(i);
+          add_data_db(i);
+        }
+      }
+    });
+  }, (error) => {
+    console.log("error call back : " + JSON.stringify(error));
+    console.log(error);
+  }, () => {
+    console.log("transaction complete call back ");
   });
+}
+
+export async function add_data_db(guia) {
+  
+  return new Promise((resolve) => {
+    db.transaction((transaction) => {
+      transaction.executeSql("INSERT INTO guias (title, description, create_date) VALUES (?, ?,  datetime());", [guia.title, guia.description], () => {
+        resolve("Tarefa adicionada com sucesso!");
+      })
+    }, (error) => {
+      console.log("error call back : " + JSON.stringify(error));
+      console.log(error);
+    }, () => {
+      console.log("transaction complete call back ");
+    });
+  })
 }
 
 export async function createGuia(guia) {

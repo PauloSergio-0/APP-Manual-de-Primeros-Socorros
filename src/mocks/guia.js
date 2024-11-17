@@ -1,4 +1,4 @@
-export const guia = [
+export const guias_datas = [
   {
     id: "1",
     title: 'Parada Cardiáca',

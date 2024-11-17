@@ -63,26 +63,25 @@ export default function Main() {
 
     setIsEditGuiaModalVisible(true);
   }
-  // Função para confirmar a exclusão da guia
-  async function handleConfirmDeleteGuia(guia) {
-    console.log("teste de guia exclusão")
-    
-    console.log(guia)
-    console.log("teste de guia exclusãoasdasdasd")
-    await deleteGuia(guia)
-    console.log("teste de guia exclusão2222")
-    console.log(guia)
-    loadGuias()
-    setIsDeleteModalVisible(true);
-  }
 
   // Função para confirmar a exclusão
   function handleDeleteGuia(guia) {
-    console.log("guia a ser deletada: ")
-    console.log(guia.id)
     setGuiaBeingDeleted(guia)
+    console.log('mudou estado')
+    console.log(guiaBeingDeleted)
+    setIsDeleteModalVisible(true);
+  }
+
+  // Função para confirmar a exclusão da guia
+  async function handleConfirmDeleteGuia() {
+    
+    console.log('teste de recebimeto')
+    console.log(guiaBeingDeleted)
+     await deleteGuia(guiaBeingDeleted)
+    loadGuias()
     setIsDeleteModalVisible(false);
   }
+
   
   // UseEffect para monitorar mudanças no estado guiaBeingEdit
   useEffect(() => {
@@ -96,8 +95,8 @@ export default function Main() {
       <Guias
         guia={guia}  // Passando os dados corretamente
         onEditGuia={handleEditGuia}
-        onDeleteGuia={handleConfirmDeleteGuia}
-        DeleteGuia={handleConfirmDeleteGuia}
+        onDeleteGuia={handleDeleteGuia}
+
       />
 
       <AddButton onPress={() => setIsNewGuiaModalVisible(true)} />
@@ -105,7 +104,7 @@ export default function Main() {
       <DeleteConfirmModal
           visible={isDeleteModalVisible}
           onClose={() => setIsDeleteModalVisible(false)}
-          onConfirm={handleDeleteGuia}
+          onConfirm={() =>handleConfirmDeleteGuia()}
         />
       
       <NewGuiaModal
