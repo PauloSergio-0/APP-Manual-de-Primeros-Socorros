@@ -18,7 +18,7 @@ export function createTable() {
   });
 }
 
-export async function createGuia(Guia) {
+export async function createGuia(guia) {
   return new Promise((resolve) => {
     db.transaction((transaction) => {
       transaction.executeSql("INSERT INTO guias (title, description, create_date) VALUES (?, ?,  datetime());", [guia.title, guia.description], () => {
