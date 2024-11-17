@@ -34,6 +34,8 @@ export async function createGuia(guia) {
 }
 
 export async function updateGuia(guia) {
+  // console.log("testsssss")
+  // console.log(guia)
   return new Promise((resolve) => {
     db.transaction((transaction) => {
       transaction.executeSql("UPDATE guias SET title = ?, description = ? WHERE id = ?;", [guia.title, guia.description, guia.id], () => {
@@ -49,8 +51,11 @@ export async function updateGuia(guia) {
 }
 
 export async function deleteGuia(guia) {
+  console.log('guia recebida')
+  console.log(guia.id)
   return new Promise((resolve) => {
     db.transaction((transaction) => {
+      console.log(guia.id)
       transaction.executeSql("DELETE FROM guias WHERE id = ?;", [guia.id], () => {
         resolve("Tarefa removida com sucesso!");
       })

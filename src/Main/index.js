@@ -43,13 +43,11 @@ export default function Main() {
     setIsNewGuiaModalVisible(false);
   }
 
-  // Função para confirmar a exclusão
-  function handleDeleteGuia() {
-    setGuiaBeingDeleted(guia)
-    setIsDeleteModalVisible(false);
-  }
   // Função para salvar edição da guia
-  async function handleSaveEditGuia(Guia) {
+  async function handleSaveEditGuia(guia) {
+    console.log("guia teste guia")
+    console.log(guia)
+
     await updateGuia({ ...guia, id: guiaBeingEdit.id });
 
 
@@ -59,16 +57,31 @@ export default function Main() {
   
   // Função de edição de guia
   function handleEditGuia(guia) {
-    console.log("Antes de alterar:", guia);  // Verifica o guia antes de alterá-lo
-    setGuiaBeingEdit(guia);  // Atualiza o estado
     
+   // Verifica o guia antes de alterá-lo
+    setGuiaBeingEdit(guia);  // Atualiza o estado
+
     setIsEditGuiaModalVisible(true);
   }
   // Função para confirmar a exclusão da guia
   async function handleConfirmDeleteGuia(guia) {
-  await deleteGuia(guiaBeingDeleted)
-  loadGuias()
+    console.log("teste de guia exclusão")
+    
+    console.log(guia)
+    console.log("teste de guia exclusãoasdasdasd")
+    await deleteGuia(guia)
+    console.log("teste de guia exclusão2222")
+    console.log(guia)
+    loadGuias()
     setIsDeleteModalVisible(true);
+  }
+
+  // Função para confirmar a exclusão
+  function handleDeleteGuia(guia) {
+    console.log("guia a ser deletada: ")
+    console.log(guia.id)
+    setGuiaBeingDeleted(guia)
+    setIsDeleteModalVisible(false);
   }
   
   // UseEffect para monitorar mudanças no estado guiaBeingEdit
