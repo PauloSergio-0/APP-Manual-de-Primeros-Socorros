@@ -45,20 +45,16 @@ export default function Main() {
 
   // Função para salvar edição da guia
   async function handleSaveEditGuia(guia) {
-    console.log("guia teste guia")
-    console.log(guia)
 
     await updateGuia({ ...guia, id: guiaBeingEdit.id });
-
-
     loadGuias()
     setIsEditGuiaModalVisible(false)
   }
   
-  // Função de edição de guia
+
   function handleEditGuia(guia) {
-    
-   // Verifica o guia antes de alterá-lo
+
+  
     setGuiaBeingEdit(guia);  // Atualiza o estado
 
     setIsEditGuiaModalVisible(true);
@@ -75,9 +71,7 @@ export default function Main() {
   // Função para confirmar a exclusão da guia
   async function handleConfirmDeleteGuia() {
     
-    console.log('teste de recebimeto')
-    console.log(guiaBeingDeleted)
-     await deleteGuia(guiaBeingDeleted)
+    await deleteGuia(guiaBeingDeleted)
     loadGuias()
     setIsDeleteModalVisible(false);
   }
